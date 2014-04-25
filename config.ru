@@ -1,7 +1,4 @@
-require 'rubygems'
-require 'date'
 require 'bundler/setup'
-require 'json'
 
 module ArtversityServer
   Bundler.require :default
