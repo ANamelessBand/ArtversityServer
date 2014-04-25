@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'sequel'
+require 'awesome_print'
+require 'pry'
+
+Dir['./{models}/**/*.rb'].each { |file| require file }
+
+Pry.start
