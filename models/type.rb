@@ -6,4 +6,16 @@ class Type < Sequel::Model
     validates_presence [:name]
     validates_unique(:name)
   end
+
+  def categories_data
+    {categories: categories.map(&:values)}
+  end
+
+  def full_data
+    values.merge categories_data
+  end
+
+  def self.all_data
+    map &:full_data
+  end
 end
