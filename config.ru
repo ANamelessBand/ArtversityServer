@@ -11,7 +11,7 @@ module ArtversityServer
 
     enable :sessions
 
-    # call Bundle.require for each environment
+    # Call Bundle.require for each environment
     settings.environments.each do |environment|
       configure environment do
         Bundler.require environment
@@ -46,6 +46,7 @@ module ArtversityServer
   end
 end
 
-Dir['./{controllers}/**/*.rb'].each { |file| require file }
+Sequel::Model.plugin :validation_helpers
+Dir['./{controllers,models}/**/*.rb'].each { |file| require file }
 
 run ArtversityServer::ApplciationController
