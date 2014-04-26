@@ -7,6 +7,7 @@ gem 'sinatra', '~>1.4'
 gem 'sinatra-contrib', '~>1.4'
 gem 'thin', '~> 1.6.2'
 gem 'json', '~> 1.8.1'
+gem 'rake', '~> 10.3.1'
 
 group :development do
   gem 'awesome_print',    require: false
