@@ -7,11 +7,6 @@ class Performance < Sequel::Model
     validates_presence [:last_seen, :times_tagged, :location_latitude, :location_longitude]
   end
 
-  def before_save
-    tag
-    super
-  end
-
   def full_data
     core_data.merge media_data
   end
@@ -26,17 +21,21 @@ class Performance < Sequel::Model
   end
 
   def core_data
-    values.merge type_data
+    values.merge(type_data).merge categories_data
   end
 
   def type_data
     {type: type.values}
   end
 
+  def categories_data
+    {categories: categories.map(&:values)}
+  end
+
   def tag
     self.last_seen = DateTime.now
     # TODO: WRITE MIGRATION: times_tagged to be 0 by default
-    self.times_tagged = (times_tagged || 0).inc
+    self.times_tagged = (times_tagged || 0) + 1
     save
   end
 
