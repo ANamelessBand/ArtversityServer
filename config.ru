@@ -8,8 +8,7 @@ module ArtversityServer
     config_file 'config.yml'
 
     set :environment, settings.environment
-
-    enable :sessions
+    set :protection, except: [:json_csrf]
 
     # Call Bundle.require for each environment
     settings.environments.each do |environment|
