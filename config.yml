@@ -8,9 +8,17 @@ environments:
 environment: development
 
 # Paths (relative to ./controllers) to the views and public folders
+public_path:     '../public'
 migrations_path: './database/migrations'
 
 # Development specific settings
 development:
+  db_host:     'localhost'
+  db_name:     'artversity'
+  db_user:     'postgres'
 
 production:
+  db_host:     'localhost'
+  db_name:     'artversity'
+  db_user:     'artversity'
+  db_password: 'artversity'
