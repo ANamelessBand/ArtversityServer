@@ -1,8 +1,10 @@
 module ArtversityServer
   class PerformancesController < Base
+    NEARBY_RANGE = 0.002
+
     get '/all', provides: :json do
       status 200
-      body Performance.all.map(&:core_data).to_json
+      body Performance.core_data.to_json
     end
 
     get '/:id', provides: :json do
@@ -17,12 +19,17 @@ module ArtversityServer
     end
 
     get '/nearby/:longitude/:latitude', provides: :json do
-      performances = Performance.find(id: params[:id]).filter |p| do
-        p.nearby?(params[:latitude], params[:longitude])
-      end
+      performances = Performance.nearby(params[:latitude], params[:longitude], NEARBY_RANGE)
 
       status 200
-      body performances.full_data.to_json
+      body performances.map(&:full_data).to_json
+    end
+
+    get '/recent/:longitude/:latitude', provides: :json do
+      performances = Performance.recent(params[:latitude], params[:longitude], NEARBY_RANGE)
+
+      status 200
+      body performances.sort_by(:last_seen).map(&:full_data).to_json
     end
 
     post '/', provides: :json do
