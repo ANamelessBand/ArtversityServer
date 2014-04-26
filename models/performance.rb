@@ -34,9 +34,10 @@ class Performance < Sequel::Model
   end
 
   def tag
-    last_seen = DateTime.now
+    self.last_seen = DateTime.now
     # TODO: WRITE MIGRATION: times_tagged to be 0 by default
-    times_tagged = times_tagged.to_i + 1
+    self.times_tagged = (times_tagged || 0).inc
+    save
   end
 
   def in_latitude_range?(other_latitude, range)

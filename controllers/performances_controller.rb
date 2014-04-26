@@ -18,24 +18,23 @@ module ArtversityServer
       end
     end
 
-    get '/nearby/:longitude/:latitude', provides: :json do
-      performances = Performance.nearby(params[:latitude], params[:longitude], NEARBY_RANGE)
+    get '/nearby/:latitude/:longitude', provides: :json do
+      performances = Performance.nearby(params[:latitude].to_f, params[:longitude].to_f, NEARBY_RANGE)
 
       status 200
       body performances.map(&:full_data).to_json
     end
 
-    get '/recent/:longitude/:latitude', provides: :json do
-      performances = Performance.recent(params[:latitude], params[:longitude], NEARBY_RANGE)
+    get '/recent/:latitude/:longitude', provides: :json do
+      performances = Performance.recent(params[:latitude].to_f, params[:longitude].to_f, NEARBY_RANGE)
 
       status 200
-      body performances.sort_by(:last_seen).map(&:full_data).to_json
+      body performances.map(&:full_data).to_json
     end
 
     post '/', provides: :json do
       performance = Performance.new(params[:performance])
       performance.tag
-      performance.save
 
       status 200
     end
@@ -47,7 +46,6 @@ module ArtversityServer
         status 404
       else
         performance.tag
-        performance.save
 
         status 200
       end
