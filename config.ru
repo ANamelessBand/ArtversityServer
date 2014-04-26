@@ -21,9 +21,9 @@ module ArtversityServer
     configure :development do
       register Sinatra::Reloader
 
-      db_host     = settings.production['db_host']
-      db_name     = settings.production['db_name']
-      db_user     = settings.production['db_user']
+      db_host     = settings.development['db_host']
+      db_name     = settings.development['db_name']
+      db_user     = settings.development['db_user']
 
       DB = Sequel.postgres(db_name,
                            host: db_host,
@@ -49,4 +49,4 @@ end
 Sequel::Model.plugin :validation_helpers
 Dir['./{controllers,models}/**/*.rb'].each { |file| require file }
 
-run ArtversityServer::ApplciationController
+map ('/types') { run ArtversityServer::TypeController }
