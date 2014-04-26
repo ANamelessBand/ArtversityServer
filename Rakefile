@@ -35,6 +35,9 @@ namespace :db do
                          password: db_password)
   end
 
+  Sequel::Model.plugin :validation_helpers
+  Dir.glob('./models/*.rb').each { |file| require file }
+
   desc 'Reverts all migrations.'
   task :drop do
     puts 'Reverting all migrations...'
@@ -53,5 +56,12 @@ namespace :db do
   task :reset do
     Rake::Task['db:drop'].execute
     Rake::Task['db:migrate'].execute
+  end
+
+  desc 'Fills the database with dummy data'
+  task :seed do
+    puts 'Populating database with dummy data...'
+    require './database/seed_dummy_data.rb'
+    puts 'Done!'
   end
 end
