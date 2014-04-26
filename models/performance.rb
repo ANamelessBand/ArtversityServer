@@ -8,7 +8,6 @@ class Performance < Sequel::Model
   end
 
   def before_save
-    puts "FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK"
     tag
     super
   end
@@ -27,22 +26,57 @@ class Performance < Sequel::Model
   end
 
   def core_data
-    {
-      id: id,
-      rating: 42,
-      location: {
-        latitude: location_latitude,
-        longitude: location_longitude
-      },
-      times_tagged: times_tagged,
-      type: type.name,
-      categories: categories.map(&:name),
-      picture: 'pictures.last.url'
-    }
+    values.merge type_data
+  end
+
+  def type_data
+    {type: type.values}
   end
 
   def tag
-    self.last_seen = DateTime.now
-    self.times_tagged = times_tagged.to_i + 1 # TODO: WRITE MIGRATION: times_tagged to be 0 by default
+    last_seen = DateTime.now
+    # TODO: WRITE MIGRATION: times_tagged to be 0 by default
+    times_tagged = times_tagged.to_i + 1
+  end
+
+  def in_latitude_range?(other_latitude, range)
+    latitude_difference = location_latitude - other_latitude
+    latitude_difference.abs < range
+  end
+
+  def in_longitude_range?(other_longitude, range)
+    longitude_difference = location_longitude - other_longitude
+    longitude_difference.abs < range
+  end
+
+  def nearby?(other_latitude, other_longitude, range)
+    in_latitude_range?(other_latitude, range) &&
+      in_longitude_range?(other_longitude, range)
+  end
+
+  class << self
+    def core_data
+      all.map &:core_data
+    end
+
+    def full_data
+      all.map &:full_data
+    end
+
+    def nearby_from_dataset(dataset, other_latitude, other_longitude, range)
+      dataset.all.select do |performance|
+        performance.nearby?(other_latitude, other_longitude, range)
+      end
+    end
+
+    def nearby(other_latitude, other_longitude, range)
+      dataset = self
+      nearby_from_dataset(dataset, other_latitude, other_longitude, range)
+    end
+
+    def recent(other_latitude, other_longitude, range)
+      dataset = reverse_order :last_seen
+      nearby_from_dataset(dataset, other_latitude, other_longitude, range)
+    end
   end
 end
