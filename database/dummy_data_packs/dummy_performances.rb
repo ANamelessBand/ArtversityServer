@@ -46,12 +46,14 @@ latitudes.each_with_index do |latitude, index|
   categories = type.categories
   categories_count = times_tagged[index] % 3 + 1
   selected_categories = categories.take categories_count
+  is_band = index % 4 == 0
 
   performance = Performance.create last_seen: last_seen[index],
                                    times_tagged: times_tagged[index],
                                    location_latitude: latitude,
                                    location_longitude: longitudes[index],
-                                   type: type
+                                   type: type,
+                                   is_band: is_band
 
   selected_categories.each do |category|
     performance.add_category category
