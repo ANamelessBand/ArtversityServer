@@ -49,4 +49,5 @@ end
 Sequel::Model.plugin :validation_helpers
 Dir['./{controllers,models}/**/*.rb'].each { |file| require file }
 
-map ('/types') { run ArtversityServer::TypeController }
+map('/types') { run ArtversityServer::TypeController }
+map('/performances') { run ArtversityServer::PerformancesController }
