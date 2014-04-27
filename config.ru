@@ -46,7 +46,7 @@ module ArtversityServer
 end
 
 Sequel::Model.plugin :validation_helpers
-Dir['./{controllers,models}/**/*.rb'].each { |file| require file }
+Dir['./{controllers,uploaders,models}/**/*.rb'].each { |file| require file }
 
 map('/') { run ArtversityServer::ApplicationController }
 map('/types') { run ArtversityServer::TypeController }

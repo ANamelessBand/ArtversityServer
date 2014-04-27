@@ -35,6 +35,6 @@ when 'production'
 end
 
 Sequel::Model.plugin :validation_helpers
-Dir['./{models}/**/*.rb'].each { |file| require file }
+Dir['./{uploaders,models}/**/*.rb'].each { |file| require file }
 
 Pry.start
