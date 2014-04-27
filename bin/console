@@ -19,7 +19,8 @@ when 'development'
 
   DB = Sequel.postgres(db_name,
                        host: db_host,
-                       user: db_user)
+                       user: db_user
+                       )
 when 'production'
   db_host     = env_settings['db_host']
   db_name     = env_settings['db_name']

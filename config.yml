@@ -16,7 +16,6 @@ development:
   db_host:     'localhost'
   db_name:     'artversity'
   db_user:     'postgres'
-  db_password: 'postgres'
 
 production:
   db_host:     'localhost'
