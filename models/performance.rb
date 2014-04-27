@@ -26,6 +26,15 @@ class Performance < Sequel::Model
 
   def core_data
     values[:active] = active
+    pics = pictures
+    unless pics.empty?
+      pic = pics.first
+      thumb = pic.filename.thumb.file.file
+      pic_store_dir = pic.filename.store_dir
+      thumb_url = thumb[Regexp.new(pic_store_dir + '.*')]
+      values[:picture] = thumb_url
+    end
+
     values.merge(type_data).merge categories_data
   end
 
@@ -57,6 +66,10 @@ class Performance < Sequel::Model
   def nearby?(other_latitude, other_longitude, range)
     in_latitude_range?(other_latitude, range) &&
       in_longitude_range?(other_longitude, range)
+  end
+
+  def pictures
+    attachments.select { |attachment| attachment.type == 'Picture' }
   end
 
   class << self
