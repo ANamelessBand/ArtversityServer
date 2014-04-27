@@ -1,4 +1,4 @@
 module ArtversityServer
-  class ApplciationController < Base
+  class ApplicationController < Base
   end
 end

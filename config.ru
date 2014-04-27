@@ -50,3 +50,4 @@ Dir['./{controllers,models}/**/*.rb'].each { |file| require file }
 
 map('/types') { run ArtversityServer::TypeController }
 map('/performances') { run ArtversityServer::PerformancesController }
+map('/') { run ArtversityServer::ApplicationController }

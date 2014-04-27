@@ -6,7 +6,7 @@ categories = [
                'Accordion',
                'Harp',
                'Flute',
-               'OneManBand',
+               'Onemanband',
               ],
               [
                'Graffitti',
