@@ -5,6 +5,8 @@ require 'pg'
 require 'awesome_print'
 require 'pry'
 require 'yaml'
+require 'carrierwave'
+require 'carrierwave/sequel'
 
 settings = YAML.load(File.open('config.yml'))
 

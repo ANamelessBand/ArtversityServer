@@ -1,5 +1,7 @@
 require 'sequel'
 require 'yaml'
+require 'carrierwave'
+require 'carrierwave/sequel'
 
 # Load config file
 settings = YAML.load(File.open('config.yml'))
