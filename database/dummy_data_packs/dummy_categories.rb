@@ -1,22 +1,22 @@
 categories = [
               [
-               'Guitar',
-               'Violin',
-               'Trumpet',
-               'Accordion',
-               'Harp',
-               'Flute',
-               'Onemanband',
+               'guitar',
+               'violin',
+               'trumpet',
+               'accordion',
+               'harp',
+               'flute',
+               'onemanband',
               ],
               [
-               'Graffitti',
-               'Cartoon',
-               'Portrait',
+               'graffitti',
+               'cartoon',
+               'portrait',
               ],
               [
-               'Drama',
-               'Humor',
-               'Dance',
+               'drama',
+               'humor',
+               'dance',
               ],
              ]
 

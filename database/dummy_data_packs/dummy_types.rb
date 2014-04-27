@@ -1,7 +1,7 @@
 types = [
-          'Musician',
-          'Artist',
-          'Actor',
+          'musician',
+          'artist',
+          'actor',
         ]
 
 types.each do |type|

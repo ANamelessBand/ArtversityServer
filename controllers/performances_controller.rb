@@ -40,11 +40,16 @@ module ArtversityServer
       # TODO: extract this logic to helpers
       type_name = params['type'].capitalize
       type      = Type.find name: type_name
+      puts '---- params'
+      p params
+      puts '----------'
 
-      categories_names = param['categories'].map &:capitalize
-      categories       = categories_names.map do |ctaegory|
+      categories_names = params['categories']
+      puts categories_names
+      categories       = categories_names.map do |category|
         Category.find name: category
       end
+      puts categories
 
       location_latitude = params['location_latitude'].to_f
       location_longitude = params['location_longitude'].to_f
@@ -58,6 +63,7 @@ module ArtversityServer
       categories.each do |category|
         performance.add_category category
       end
+
       performance.tag
 
       status 200
