@@ -21,7 +21,7 @@ module ArtversityServer
     get '/nearby/:latitude/:longitude', provides: :json do
       latitude  = params[:latitude].to_f
       longitude = params[:longitude].to_f
-      performances = Performance.nearby(latitude, longitude, NEARBY_RANGE)
+      performances = Performance.nearby(latitude, longitude, NEARBY_RANGE).sort_by(&:last_seen).reverse
 
       status 200
       body performances.map(&:full_data).to_json
@@ -67,6 +67,7 @@ module ArtversityServer
         status 404
       else
         performance.tag
+        performance.save
 
         status 200
 
