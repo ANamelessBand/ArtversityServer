@@ -18,10 +18,11 @@ namespace :db do
     db_host     = env_settngs['db_host']
     db_name     = env_settngs['db_name']
     db_user     = env_settngs['db_user']
+    db_password = env_settngs['db_password']
 
     DB = Sequel.postgres(db_name,
                          host: db_host,
-                         user: db_user)
+                         user: db_user, password: db_password)
 
   when 'production'
     db_host     = env_settngs['db_host']

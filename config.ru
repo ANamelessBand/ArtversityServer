@@ -23,10 +23,11 @@ module ArtversityServer
       db_host     = settings.development['db_host']
       db_name     = settings.development['db_name']
       db_user     = settings.development['db_user']
+      db_password     = settings.development['db_password']
 
       DB = Sequel.postgres(db_name,
                            host: db_host,
-                           user: db_user)
+                           user: db_user, password: db_password)
     end
 
     configure :production do
