@@ -1,6 +1,6 @@
 module ArtversityServer
   class PerformancesController < Base
-    NEARBY_RANGE = 0.002
+    NEARBY_RANGE = 0.004
 
     get '/all', provides: :json do
       status 200
