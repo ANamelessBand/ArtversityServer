@@ -11,6 +11,10 @@ class Performance < Sequel::Model
     core_data.merge media_data
   end
 
+  def active
+    DateTime.parse(last_seen.to_s) > DateTime.now.prev_day
+  end
+
   def media_data
     # TODO: Think about this represation
     {
@@ -21,6 +25,7 @@ class Performance < Sequel::Model
   end
 
   def core_data
+    values[:active] = active
     values.merge(type_data).merge categories_data
   end
 
