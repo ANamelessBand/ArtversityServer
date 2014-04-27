@@ -18,21 +18,28 @@ class Performance < Sequel::Model
   def media_data
     # TODO: Think about this represation
     {
-      pictures: [],
+      pictures: pictures.map { |picture| pic_regex_magic picture },
       videos: [],
       audios: []
     }
+  end
+
+  def pic_regex_magic(pic)
+    thumb = pic.filename.thumb.file.file
+    large = pic.filename.large.file.file
+    pic_store_dir = pic.filename.store_dir
+
+    thumb_url = thumb[Regexp.new(pic_store_dir + '.*')]
+    large_url = large[Regexp.new(pic_store_dir + '.*')]
+
+    { large: large_url, thumb: thumb_url }
   end
 
   def core_data
     values[:active] = active
     pics = pictures
     unless pics.empty?
-      pic = pics.first
-      thumb = pic.filename.thumb.file.file
-      pic_store_dir = pic.filename.store_dir
-      thumb_url = thumb[Regexp.new(pic_store_dir + '.*')]
-      values[:picture] = thumb_url
+      values[:picture] = pic_regex_magic(pics.last)[:thumb]
     end
 
     values.merge(type_data).merge categories_data
