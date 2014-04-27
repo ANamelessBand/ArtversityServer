@@ -18,6 +18,6 @@ class Attachment < Sequel::Model
   mount_uploader :filename, ImageUploader
 
   def validate
-    validates_presence [:filename, :type]
+    validates_presence [:filename]
   end
 end
