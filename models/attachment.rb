@@ -1,4 +1,4 @@
-class Media < Sequel::Model
+class Attachment < Sequel::Model
   many_to_one :performance
 
   def validate
