@@ -38,38 +38,26 @@ module ArtversityServer
 
     post '/', provides: :json do
       # TODO: extract this logic to helpers
-      type_name = params['type'].capitalize
-      type      = Type.find name: type_name
-      puts '---- params'
-      p params
-      puts '----------'
-
-      categories_names = params['categories']
-      puts categories_names
-      categories       = categories_names.map do |category|
-        Category.find name: category
-      end
-      puts categories
-
+      type = Type.find name: params['type']
+      categories = params['categories'].map { |category| Category.find name: category }
       location_latitude = params['location_latitude'].to_f
       location_longitude = params['location_longitude'].to_f
-
       is_band = params['isBand'] == 'true'
 
       performance = Performance.new type: type,
                                     location_latitude: location_latitude,
                                     location_longitude: location_longitude,
                                     is_band: is_band
+
+      performance.tag
+      performance.save
+
       categories.each do |category|
         performance.add_category category
       end
 
-      performance.tag
-
       status 200
-
-      id_hash = {id: performance.id}
-      body id_hash.to_json
+      body({id: performance.id}.to_json)
     end
 
     put '/', provides: :json do

@@ -50,7 +50,6 @@ class Performance < Sequel::Model
     self.last_seen = DateTime.now
     # TODO: WRITE MIGRATION: times_tagged to be 0 by default
     self.times_tagged = (times_tagged || 0) + 1
-    save
   end
 
   def in_latitude_range?(other_latitude, range)
