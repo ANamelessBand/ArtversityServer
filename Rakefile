@@ -1,5 +1,7 @@
 require 'sequel'
 require 'yaml'
+require 'carrierwave'
+require 'carrierwave/sequel'
 
 # Load config file
 settings = YAML.load(File.open('config.yml'))
@@ -36,7 +38,7 @@ namespace :db do
   end
 
   Sequel::Model.plugin :validation_helpers
-  Dir.glob('./models/*.rb').each { |file| require file }
+  Dir.glob('./uploaders,models/*.rb').each { |file| require file }
 
   desc 'Reverts all migrations.'
   task :drop do

@@ -5,6 +5,8 @@ require 'pg'
 require 'awesome_print'
 require 'pry'
 require 'yaml'
+require 'carrierwave'
+require 'carrierwave/sequel'
 
 settings = YAML.load(File.open('config.yml'))
 
@@ -34,6 +36,6 @@ when 'production'
 end
 
 Sequel::Model.plugin :validation_helpers
-Dir['./{models}/**/*.rb'].each { |file| require file }
+Dir['./{uploaders,models}/**/*.rb'].each { |file| require file }
 
 Pry.start
