@@ -45,7 +45,9 @@ class Performance < Sequel::Model
   def core_data
     values[:active] = active
     pics = pictures
-    unless pics.empty?
+    if pics.empty?
+      values[:picture] = 'default.jpg'
+    else
       values[:picture] = pic_regex_magic(pics.last)[:thumb]
     end
 
