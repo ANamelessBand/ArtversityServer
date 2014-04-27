@@ -19,9 +19,16 @@ class Performance < Sequel::Model
     # TODO: Think about this represation
     {
       pictures: pictures.map { |picture| pic_regex_magic picture },
-      videos: [],
-      audios: []
+      videos: videos.map { |video| regex_magic2 video },
+      audios: audios.map { |audio| regex_magic2 audio }
     }
+  end
+
+  def regex_magic2(attachment)
+    file = attachment.filename.file.file
+    store_dir = attachment.filename.store_dir
+
+    { filename: file[Regexp.new(store_dir + '.*')] }
   end
 
   def pic_regex_magic(pic)
@@ -74,8 +81,20 @@ class Performance < Sequel::Model
       in_longitude_range?(other_longitude, range)
   end
 
+  def attachment_with_type(type)
+    attachments.select { |attachment| attachment.type == type }
+  end
+
   def pictures
-    attachments.select { |attachment| attachment.type == 'Picture' }
+    attachment_with_type 'Picture'
+  end
+
+  def videos
+    attachment_with_type 'Video'
+  end
+
+  def audios
+    attachment_with_type 'Audio'
   end
 
   class << self
